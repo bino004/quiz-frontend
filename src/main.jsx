@@ -3,6 +3,7 @@ import "./index.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -15,7 +16,20 @@ import ProtectedRoute from "./components/ProtectedRoute";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<Login />} />
+      <Route
+        path="/"
+        element={
+          localStorage.getItem("token") ? (
+            JSON.parse(localStorage.getItem("user"))?.role === "admin" ? (
+              <Navigate to="/admin" />
+            ) : (
+              <Navigate to="/user" />
+            )
+          ) : (
+            <Login />
+          )
+        }
+      />
       <Route path="/register" element={<Register />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route
