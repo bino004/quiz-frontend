@@ -91,6 +91,35 @@ function TakeQuiz() {
     };
   }, [score]);
 
+  const [tabSwitchCount, setTabSwitchCount] = useState(0);
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden && score === null) {
+        setTabSwitchCount((prev) => {
+          const newCount = prev + 1;
+
+          if (newCount < 3) {
+            alert(`⚠️ Warning! You switched tab (${newCount}/3)`);
+          }
+
+          if (newCount >= 3) {
+            alert("❌ Too many tab switches. Submitting quiz!");
+            submitQuiz();
+          }
+
+          return newCount;
+        });
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [score]);
+
   async function getQuestions() {
     const res = await axios.get(
       `https://quiz-backend-dz0i.onrender.com/api/quizzes/${id}/questions`,
