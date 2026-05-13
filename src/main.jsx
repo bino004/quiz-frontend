@@ -5,6 +5,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 
+
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import UserDashboard from "./pages/UserDashboard";
@@ -12,9 +13,11 @@ import AdminDashboard from "./pages/AdminDashboard";
 import TakeQuiz from "./pages/TakeQuiz";
 import ForgotPassword from "./pages/ForgotPassword";
 import ProtectedRoute from "./components/ProtectedRoute";
+import IdleHandler from "./components/IdleHandler";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
+    <IdleHandler />
     <Routes>
       <Route
         path="/"
