@@ -155,6 +155,17 @@ function UserDashboard() {
                   {quiz.description || "No description added."}
                 </p>
 
+                {/* TIMER SECTION */}
+                <div className="mb-4">
+                  <span className="inline-block bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-bold">
+                    Time: {quiz.timer || 5} min
+                  </span>
+
+                  <p className="text-sm text-slate-500 mt-2">
+                    Minimum: 1 min | Maximum: 60 min
+                  </p>
+                </div>
+
                 <a
                   href={`/quiz/${quiz.id}`}
                   className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 active:scale-95 transition text-white py-3 rounded-2xl font-bold shadow-lg shadow-blue-500/20"

@@ -16,7 +16,8 @@ function TakeQuiz() {
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState({});
   const [score, setScore] = useState(null);
-  const [timeLeft, setTimeLeft] = useState(300);
+  const [quizTimer, setQuizTimer] = useState(5);
+  const [timeLeft, setTimeLeft] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
 
   const token = localStorage.getItem("token");
@@ -59,7 +60,7 @@ function TakeQuiz() {
     if (saved) {
       setAnswers(saved.answers || {});
       setCurrentQuestion(saved.currentQuestion || 0);
-      setTimeLeft(saved.timeLeft || 300);
+      setTimeLeft(saved.timeLeft || quizTimer * 60);
     }
   }, []);
 
@@ -120,13 +121,32 @@ function TakeQuiz() {
     };
   }, [score]);
 
-  async function getQuestions() {
-    const res = await axios.get(
-      `https://quiz-backend-dz0i.onrender.com/api/quizzes/${id}/questions`,
-      authConfig,
-    );
-    setQuestions(res.data);
-  }
+ async function getQuestions() {
+   try {
+     const res = await axios.get(
+       `https://quiz-backend-dz0i.onrender.com/api/quizzes/${id}/questions`,
+       authConfig,
+     );
+
+     // If backend returns only array
+     if (Array.isArray(res.data)) {
+       setQuestions(res.data);
+       setQuizTimer(5);
+       setTimeLeft(5 * 60);
+       return;
+     }
+
+     // Updated backend response
+     const questionsData = res.data.questions || [];
+     const timerMinutes = res.data.quiz?.timer || 5;
+
+     setQuestions(questionsData);
+     setQuizTimer(timerMinutes);
+     setTimeLeft(timerMinutes * 60);
+   } catch (error) {
+     console.error("Error fetching questions", error);
+   }
+ } 
 
   function handleAnswer(questionId, answer) {
     setAnswers({

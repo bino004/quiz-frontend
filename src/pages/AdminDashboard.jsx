@@ -55,7 +55,13 @@ function AdminDashboard() {
 
   const [activeTab, setActiveTab] = useState("dashboard");
 
+  
+
   const [level, setLevel] = useState("Easy");
+
+  const [timer, setTimer] = useState(5);
+
+  const [editTimer, setEditTimer] = useState(5);
 
   const token = localStorage.getItem("token");
 
@@ -106,6 +112,7 @@ function AdminDashboard() {
 
   async function createQuiz(e) {
     e.preventDefault();
+    console.log(timer);
 
     try {
       await axios.post(
@@ -114,6 +121,7 @@ function AdminDashboard() {
           title,
           description,
           level,
+          timer: Number(timer),
         },
         authConfig,
       );
@@ -122,6 +130,7 @@ function AdminDashboard() {
       setTitle("");
       setDescription("");
       setLevel("Easy");
+      setTimer(5);
 
       getQuizzes();
     } catch (err) {
@@ -176,11 +185,12 @@ function AdminDashboard() {
     window.location.href = "/";
   }
 
-  function startEditQuiz(quiz) {
-    setEditingQuiz(quiz.id);
-    setEditTitle(quiz.title);
-    setEditDescription(quiz.description);
-  }
+ function startEditQuiz(quiz) {
+   setEditingQuiz(quiz.id);
+   setEditTitle(quiz.title);
+   setEditDescription(quiz.description);
+   setEditTimer(quiz.timer || 5);
+ }
 
   async function updateQuiz(id) {
     try {
@@ -190,6 +200,7 @@ function AdminDashboard() {
           title: editTitle,
           description: editDescription,
           level,
+          timer: Number(editTimer),
         },
         authConfig,
       );
@@ -566,6 +577,26 @@ function AdminDashboard() {
                     placeholder="Description"
                   />
 
+                  <div>
+                    <label className="block mb-2 font-semibold">
+                      Quiz Timer (Minutes)
+                    </label>
+
+                    <input
+                      type="number"
+                      min="1"
+                      max="60"
+                      value={timer}
+                      onChange={(e) => setTimer(Number(e.target.value))}
+                      className="w-full border border-slate-300 bg-white/80 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                      placeholder="Enter timer"
+                    />
+
+                    <p className="text-sm text-gray-500 mt-1">
+                      Minimum: 1 min | Maximum: 60 min
+                    </p>
+                  </div>
+
                   <select
                     className="w-full border border-slate-300 bg-white/80 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                     value={level}
@@ -617,6 +648,27 @@ function AdminDashboard() {
                             value={editDescription}
                             onChange={(e) => setEditDescription(e.target.value)}
                           />
+
+                          <div>
+                            <label className="block mb-2 font-semibold">
+                              Quiz Timer (Minutes)
+                            </label>
+
+                            <input
+                              type="number"
+                              min="1"
+                              max="60"
+                              value={editTimer}
+                              onChange={(e) =>
+                                setEditTimer(Number(e.target.value))
+                              }
+                              className="w-full border border-slate-300 bg-white/80 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                            />
+
+                            <p className="text-sm text-gray-500 mt-1">
+                              Minimum: 1 min | Maximum: 60 min
+                            </p>
+                          </div>
 
                           <div className="flex gap-3">
                             <button
