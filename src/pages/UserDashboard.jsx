@@ -58,7 +58,9 @@ function UserDashboard() {
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white">
       <header className="px-5 sm:px-8 py-5 flex flex-col sm:flex-row justify-between gap-4 sm:items-center border-b border-white/10 bg-white/10 backdrop-blur-xl">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-white">QuizPro</h1>
+          <h1 className="text-2xl sm:text-3xl font-black text-white">
+            QuizPro
+          </h1>
           <p className="text-slate-300">
             Welcome back, {user?.name || "Student"} 👋
           </p>
@@ -92,7 +94,7 @@ function UserDashboard() {
                 ✨ Student Dashboard
               </span>
 
-              <h1 className="text-4xl sm:text-6xl font-white leading-tight text-white">
+              <h1 className="text-4xl sm:text-6xl font-black leading-tight text-white">
                 Welcome back,{" "}
                 <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
                   {user?.name || "Student"}
