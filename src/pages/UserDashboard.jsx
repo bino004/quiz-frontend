@@ -61,7 +61,7 @@ function UserDashboard() {
           <h1 className="text-2xl sm:text-3xl font-black !text-white">
             QuizPro
           </h1>
-          <p className="text-slate-300">
+          <p className="!text-slate-300">
             Welcome back, {user?.name || "Student"} 👋
           </p>
         </div>
