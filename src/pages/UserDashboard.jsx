@@ -161,9 +161,6 @@ function UserDashboard() {
                     Time: {quiz.timer || 5} min
                   </span>
 
-                  <p className="text-sm text-slate-500 mt-2">
-                    Minimum: 1 min | Maximum: 60 min
-                  </p>
                 </div>
 
                 <a
