@@ -43,6 +43,7 @@ function AdminDashboard() {
   const [editingQuiz, setEditingQuiz] = useState(null);
   const [editTitle, setEditTitle] = useState("");
   const [editDescription, setEditDescription] = useState("");
+  const [editLevel, setEditLevel] = useState("Easy");
 
   const [questions, setQuestions] = useState([]);
   const [editingQuestion, setEditingQuestion] = useState(null);
@@ -189,6 +190,7 @@ function AdminDashboard() {
    setEditingQuiz(quiz.id);
    setEditTitle(quiz.title);
    setEditDescription(quiz.description);
+    setEditLevel(quiz.level || "Easy");
    setEditTimer(quiz.timer || 5);
  }
 
@@ -199,7 +201,7 @@ function AdminDashboard() {
         {
           title: editTitle,
           description: editDescription,
-          level,
+          level: editLevel,
           timer: Number(editTimer),
         },
         authConfig,
@@ -649,6 +651,16 @@ function AdminDashboard() {
                             onChange={(e) => setEditDescription(e.target.value)}
                           />
 
+                          <select
+                            className="w-full border border-slate-300 bg-white/80 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                            value={editLevel}
+                            onChange={(e) => setEditLevel(e.target.value)}
+                          >
+                            <option value="Easy">Easy</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Hard">Hard</option>
+                          </select>
+
                           <div>
                             <label className="block mb-2 font-semibold">
                               Quiz Timer (Minutes)
@@ -693,6 +705,9 @@ function AdminDashboard() {
                               {q.title}
                             </h3>
                             <p className="text-slate-500">{q.description}</p>
+                            <p className="text-sm font-medium text-blue-600">
+                              Level: {q.level}
+                            </p>
                             <p className="text-xs text-slate-400">ID: {q.id}</p>
                           </div>
 
