@@ -62,7 +62,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           </ProtectedRoute>
         }
       />
+
+      <Route path="/auth/callback" element={<AuthCallback />} />
     </Routes>
-    <Route path="/auth/callback" element={<AuthCallback />} />
   </BrowserRouter>,
 );
