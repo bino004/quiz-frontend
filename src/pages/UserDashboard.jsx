@@ -8,6 +8,8 @@ import {
   ArrowRight,
   ChevronDown,
   ChevronUp,
+  Sun,
+  Moon,
 } from "lucide-react";
 
 function UserDashboard() {
@@ -16,6 +18,9 @@ function UserDashboard() {
 
   const [attempts, setAttempts] = useState([]);
   const [showAttempts, setShowAttempts] = useState(true);
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem("theme") !== "light";
+  });
 
   const token = localStorage.getItem("token");
 
@@ -26,6 +31,13 @@ function UserDashboard() {
   };
 
   const user = JSON.parse(localStorage.getItem("user"));
+
+  useEffect(() => {
+    localStorage.setItem("theme", darkMode ? "dark" : "light");
+
+    document.documentElement.classList.toggle("dark", darkMode);
+  }, [darkMode]);
+
 
   useEffect(() => {
     getQuizzes();
@@ -63,24 +75,55 @@ function UserDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 !text-white">
+    <div
+      className={`min-h-screen transition-all duration-500 ${
+        darkMode
+          ? "bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white"
+          : "bg-gradient-to-br from-slate-100 via-sky-50 to-blue-100 text-slate-900"
+      }`}
+    >
       <header className="px-5 sm:px-8 py-5 flex flex-col sm:flex-row justify-between gap-4 sm:items-center border-b border-white/10 bg-white/10 backdrop-blur-xl">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-black !text-white">
+          <h1
+            className={`text-2xl sm:text-3xl font-black ${
+              darkMode ? "!text-white" : "!text-slate-900"
+            }`}
+          >
             QuizPro
           </h1>
-          <p className="!text-slate-300">
+          <p
+            className={`text-sm sm:text-base ${
+              darkMode ? "text-slate-300" : "text-slate-700"
+            }`}
+          >
             Welcome back, {user?.name || "Student"} 👋
           </p>
         </div>
 
-        <button
-          onClick={logout}
-          className="flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 active:scale-95 transition px-5 py-3 rounded-xl font-semibold shadow-lg"
-        >
-          <LogOut size={18} />
-          Logout
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => setDarkMode(!darkMode)}
+            className={`p-3 rounded-2xl border transition-all ${
+              darkMode
+                ? "bg-white/10 border-white/10 hover:bg-white/20"
+                : "bg-white border-slate-300 hover:bg-slate-100"
+            }`}
+          >
+            {darkMode ? (
+              <Sun size={20} className="text-yellow-300" />
+            ) : (
+              <Moon size={20} className="text-slate-700" />
+            )}
+          </button>
+
+          <button
+            onClick={logout}
+            className="flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 active:scale-95 transition px-5 py-3 rounded-xl font-semibold shadow-lg"
+          >
+            <LogOut size={18} />
+            Logout
+          </button>
+        </div>
       </header>
 
       <main className="max-w-7xl mx-auto px-5 sm:px-8 py-10">
@@ -88,7 +131,11 @@ function UserDashboard() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="relative overflow-hidden rounded-[40px] mb-12 p-10 sm:p-14 border border-white/10 bg-gradient-to-br from-slate-900/90 via-blue-950/70 to-indigo-950/80 backdrop-blur-3xl shadow-[0_20px_80px_rgba(0,0,0,0.35)]"
+          className={`relative overflow-hidden rounded-[40px] mb-12 p-10 sm:p-14 border backdrop-blur-3xl shadow-[0_20px_80px_rgba(0,0,0,0.15)] transition-all duration-500 ${
+            darkMode
+              ? "border-white/10 bg-gradient-to-br from-slate-900/90 via-blue-950/70 to-indigo-950/80"
+              : "border-slate-200 bg-gradient-to-br from-white to-sky-100"
+          }`}
         >
           {/* Glow Effects */}
           <div className="absolute -top-28 -right-24 w-72 h-72 bg-cyan-500/20 rounded-full blur-[100px]"></div>
@@ -102,7 +149,11 @@ function UserDashboard() {
                 ✨ Student Dashboard
               </span>
 
-              <h1 className="text-4xl sm:text-6xl font-black leading-tight  !text-white">
+              <h1
+                className={`text-4xl sm:text-6xl font-black leading-tight ${
+                  darkMode ? "!text-white" : "!text-slate-900"
+                }`}
+              >
                 Welcome back,{" "}
                 <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
                   {user?.name || "Student"}
@@ -151,7 +202,11 @@ function UserDashboard() {
               size={20}
             />
             <input
-              className="w-full bg-white/10 border border-white/10 rounded-2xl pl-12 pr-4 py-3 !text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className={`w-full border rounded-2xl pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition ${
+                darkMode
+                  ? "bg-white/10 border-white/10 text-white placeholder:text-slate-400"
+                  : "bg-white border-slate-300 text-slate-900 placeholder:text-slate-500"
+              }`}
               placeholder="Search quizzes..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -203,7 +258,11 @@ function UserDashboard() {
 
                 {/* Content */}
                 <div className="relative z-10">
-                  <h3 className="text-2xl font-black !text-white mb-3 line-clamp-1">
+                  <h3
+                    className={`text-2xl font-black mb-3 line-clamp-1 ${
+                      darkMode ? "!text-white" : "!text-slate-900"
+                    }`}
+                  >
                     {quiz.title}
                   </h3>
 
@@ -300,8 +359,20 @@ function UserDashboard() {
                   </div>
                 ) : (
                   <div className="overflow-x-auto">
-                    <table className="min-w-full text-sm bg-white/95 text-slate-900">
-                      <thead className="bg-slate-100 sticky top-0">
+                    <table
+                      className={`min-w-full text-sm ${
+                        darkMode
+                          ? "bg-slate-900 text-slate-200"
+                          : "bg-white text-slate-900"
+                      }`}
+                    >
+                      <thead
+                        className={`sticky top-0 ${
+                          darkMode
+                            ? "bg-slate-800 text-white"
+                            : "bg-slate-100 text-slate-900"
+                        }`}
+                      >
                         <tr>
                           <th className="p-4 text-center">Quiz</th>
 
