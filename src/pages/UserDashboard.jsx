@@ -75,24 +75,55 @@ function UserDashboard() {
 
       <main className="max-w-7xl mx-auto px-5 sm:px-8 py-10">
         <motion.div
-          initial={{ opacity: 0, y: 18 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="relative overflow-hidden rounded-3xl p-6 sm:p-10 mb-8 bg-white/10 border border-white/10 backdrop-blur-2xl shadow-2xl"
+          transition={{ duration: 0.5 }}
+          className="relative overflow-hidden rounded-[40px] mb-12 p-10 sm:p-14 border border-white/10 bg-gradient-to-br from-slate-900/90 via-blue-950/70 to-indigo-950/80 backdrop-blur-3xl shadow-[0_20px_80px_rgba(0,0,0,0.35)]"
         >
-          <div className="absolute -top-20 -right-20 w-56 h-56 bg-blue-500/30 rounded-full blur-3xl"></div>
-          <div className="absolute -bottom-20 -left-20 w-56 h-56 bg-purple-500/30 rounded-full blur-3xl"></div>
+          {/* Glow Effects */}
+          <div className="absolute -top-28 -right-24 w-72 h-72 bg-cyan-500/20 rounded-full blur-[100px]"></div>
 
-          <div className="relative z-10">
-            <p className="uppercase tracking-widest text-blue-200 text-sm mb-2">
-              Student Dashboard
-            </p>
-            <h2 className="text-3xl sm:text-5xl font-black mb-3">
-              Choose your next quiz
-            </h2>
-            <p className="text-slate-300 max-w-2xl">
-              Practice, improve your knowledge, and review your answers after
-              submission with explanations.
-            </p>
+          <div className="absolute -bottom-24 -left-20 w-72 h-72 bg-purple-500/20 rounded-full blur-[100px]"></div>
+
+          <div className="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+            {/* Left Content */}
+            <div className="max-w-3xl">
+              <span className="inline-flex items-center bg-cyan-500/10 border border-cyan-400/20 text-cyan-300 px-4 py-2 rounded-full text-sm font-bold tracking-wide mb-5">
+                ✨ Student Dashboard
+              </span>
+
+              <h1 className="text-4xl sm:text-6xl font-black leading-tight text-white">
+                Welcome back,{" "}
+                <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                  {user?.name || "Student"}
+                </span>
+              </h1>
+
+              <p className="text-slate-300 text-lg mt-5 leading-relaxed max-w-2xl">
+                Ready to improve your skills? Choose a quiz, test your
+                knowledge, track your progress, and challenge yourself with
+                dynamic questions.
+              </p>
+            </div>
+
+            {/* Right Stats */}
+            <div className="grid grid-cols-2 gap-4 min-w-[280px]">
+              <div className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-3xl p-5 text-center">
+                <h2 className="text-3xl font-black text-cyan-400">
+                  {filteredQuizzes.length}
+                </h2>
+
+                <p className="text-slate-300 text-sm mt-1">Available Quizzes</p>
+              </div>
+
+              <div className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-3xl p-5 text-center">
+                <h2 className="text-3xl font-black text-purple-400">
+                  {attempts.length}
+                </h2>
+
+                <p className="text-slate-300 text-sm mt-1">Total Attempts</p>
+              </div>
+            </div>
           </div>
         </motion.div>
 
