@@ -94,7 +94,7 @@ function UserDashboard() {
                 ✨ Student Dashboard
               </span>
 
-              <h1 className="text-4xl sm:text-6xl font-black leading-tight text-white">
+              <h1 className="text-4xl sm:text-6xl font-black leading-tight  !text-white">
                 Welcome back,{" "}
                 <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
                   {user?.name || "Student"}
@@ -111,7 +111,7 @@ function UserDashboard() {
             {/* Right Stats */}
             <div className="grid grid-cols-2 gap-4 min-w-[280px]">
               <div className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-3xl p-5 text-center">
-                <h2 className="text-3xl font-black text-cyan-400">
+                <h2 className="text-3xl font-black !text-cyan-400">
                   {filteredQuizzes.length}
                 </h2>
 
@@ -119,7 +119,7 @@ function UserDashboard() {
               </div>
 
               <div className="bg-white/10 border border-white/10 backdrop-blur-xl rounded-3xl p-5 text-center">
-                <h2 className="text-3xl font-black text-purple-400">
+                <h2 className="text-3xl font-black !text-purple-400">
                   {attempts.length}
                 </h2>
 
