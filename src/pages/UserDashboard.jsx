@@ -123,53 +123,84 @@ function UserDashboard() {
             <p className="text-slate-300">No quizzes found.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
             {filteredQuizzes.map((quiz, index) => (
               <motion.div
                 key={quiz.id}
-                initial={{ opacity: 0, y: 18 }}
+                initial={{ opacity: 0, y: 25 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.05 }}
-                whileHover={{ y: -6, scale: 1.01 }}
-                className="group bg-white/95 text-slate-900 rounded-3xl p-6 shadow-2xl border border-white/40"
+                transition={{ delay: index * 0.06 }}
+                whileHover={{
+                  y: -10,
+                  scale: 1.02,
+                }}
+                className="relative overflow-hidden rounded-[32px] bg-white/10 border border-white/10 backdrop-blur-2xl p-6 shadow-[0_20px_60px_rgba(0,0,0,0.25)] group"
               >
-                <div className="w-12 h-12 rounded-2xl bg-blue-600 text-white flex items-center justify-center mb-5 group-hover:scale-110 transition">
-                  <BookOpen size={22} />
-                </div>
+                {/* Glow Effects */}
+                <div className="absolute -top-20 -right-20 w-40 h-40 bg-blue-500/20 rounded-full blur-3xl group-hover:bg-blue-500/30 transition-all duration-500"></div>
 
-                <span
-                  className={`inline-block mb-4 px-3 py-1 rounded-full text-sm font-bold ${
-                    quiz.level === "Easy"
-                      ? "bg-green-100 text-green-700"
-                      : quiz.level === "Intermediate"
-                        ? "bg-yellow-100 text-yellow-700"
-                        : "bg-red-100 text-red-700"
-                  }`}
-                >
-                  {quiz.level}
-                </span>
+                <div className="absolute -bottom-16 -left-16 w-36 h-36 bg-purple-500/20 rounded-full blur-3xl group-hover:bg-purple-500/30 transition-all duration-500"></div>
 
-                <h3 className="text-2xl font-black mb-2">{quiz.title}</h3>
+                {/* Top Row */}
+                <div className="relative z-10 flex items-start justify-between mb-5">
+                  <div className="w-14 h-14 rounded-3xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-blue-500/30 group-hover:rotate-6 transition">
+                    <BookOpen size={26} className="text-white" />
+                  </div>
 
-                <p className="text-slate-600 min-h-[56px] mb-6">
-                  {quiz.description || "No description added."}
-                </p>
-
-                {/* TIMER SECTION */}
-                <div className="mb-4">
-                  <span className="inline-block bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-bold">
-                    Time: {quiz.timer || 5} min
+                  <span
+                    className={`px-4 py-1.5 rounded-full text-xs font-black tracking-wide ${
+                      quiz.level === "Easy"
+                        ? "bg-emerald-500/20 text-emerald-300 border border-emerald-400/20"
+                        : quiz.level === "Intermediate"
+                          ? "bg-yellow-500/20 text-yellow-300 border border-yellow-400/20"
+                          : "bg-red-500/20 text-red-300 border border-red-400/20"
+                    }`}
+                  >
+                    {quiz.level}
                   </span>
-
                 </div>
 
-                <a
-                  href={`/quiz/${quiz.id}`}
-                  className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 active:scale-95 transition text-white py-3 rounded-2xl font-bold shadow-lg shadow-blue-500/20"
-                >
-                  Take Quiz
-                  <ArrowRight size={18} />
-                </a>
+                {/* Content */}
+                <div className="relative z-10">
+                  <h3 className="text-2xl font-black text-white mb-3 line-clamp-1">
+                    {quiz.title}
+                  </h3>
+
+                  <p className="text-slate-300 leading-relaxed min-h-[72px] text-sm mb-5">
+                    {quiz.description || "No description added for this quiz."}
+                  </p>
+
+                  {/* Info Cards */}
+                  <div className="grid grid-cols-2 gap-3 mb-6">
+                    <div className="bg-white/10 border border-white/10 rounded-2xl p-4">
+                      <p className="text-slate-400 text-xs mb-1">Timer</p>
+
+                      <h4 className="text-lg font-black text-purple-300">
+                        {quiz.timer || 5} min
+                      </h4>
+                    </div>
+
+                    <div className="bg-white/10 border border-white/10 rounded-2xl p-4">
+                      <p className="text-slate-400 text-xs mb-1">Difficulty</p>
+
+                      <h4 className="text-lg font-black text-cyan-300">
+                        {quiz.level}
+                      </h4>
+                    </div>
+                  </div>
+
+                  {/* Button */}
+                  <a
+                    href={`/quiz/${quiz.id}`}
+                    className="group/button flex items-center justify-center gap-2 w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white py-4 rounded-2xl font-black text-lg shadow-xl shadow-blue-500/20 active:scale-95 transition-all"
+                  >
+                    Start Quiz
+                    <ArrowRight
+                      size={20}
+                      className="group-hover/button:translate-x-1 transition"
+                    />
+                  </a>
+                </div>
               </motion.div>
             ))}
           </div>
