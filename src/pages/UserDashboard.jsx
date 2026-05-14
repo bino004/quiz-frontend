@@ -55,7 +55,7 @@ function UserDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 !text-white">
       <header className="px-5 sm:px-8 py-5 flex flex-col sm:flex-row justify-between gap-4 sm:items-center border-b border-white/10 bg-white/10 backdrop-blur-xl">
         <div>
           <h1 className="text-2xl sm:text-3xl font-black !text-white">
@@ -143,7 +143,7 @@ function UserDashboard() {
               size={20}
             />
             <input
-              className="w-full bg-white/10 border border-white/10 rounded-2xl pl-12 pr-4 py-3 text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full bg-white/10 border border-white/10 rounded-2xl pl-12 pr-4 py-3 !text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Search quizzes..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -177,7 +177,7 @@ function UserDashboard() {
                 {/* Top Row */}
                 <div className="relative z-10 flex items-start justify-between mb-5">
                   <div className="w-14 h-14 rounded-3xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-blue-500/30 group-hover:rotate-6 transition">
-                    <BookOpen size={26} className="text-white" />
+                    <BookOpen size={26} className="!text-white" />
                   </div>
 
                   <span
@@ -195,7 +195,7 @@ function UserDashboard() {
 
                 {/* Content */}
                 <div className="relative z-10">
-                  <h3 className="text-2xl font-black text-white mb-3 line-clamp-1">
+                  <h3 className="text-2xl font-black !text-white mb-3 line-clamp-1">
                     {quiz.title}
                   </h3>
 
@@ -225,7 +225,7 @@ function UserDashboard() {
                   {/* Button */}
                   <a
                     href={`/quiz/${quiz.id}`}
-                    className="group/button flex items-center justify-center gap-2 w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white py-4 rounded-2xl font-black text-lg shadow-xl shadow-blue-500/20 active:scale-95 transition-all"
+                    className="group/button flex items-center justify-center gap-2 w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 !text-white py-4 rounded-2xl font-black text-lg shadow-xl shadow-blue-500/20 active:scale-95 transition-all"
                   >
                     Start Quiz
                     <ArrowRight
@@ -245,7 +245,7 @@ function UserDashboard() {
                 Performance
               </p>
 
-              <h2 className="text-3xl font-black text-white">
+              <h2 className="text-3xl font-black !text-white">
                 My Attempt History
               </h2>
 
@@ -256,7 +256,7 @@ function UserDashboard() {
 
             <div className="bg-white/10 border border-white/10 rounded-2xl px-5 py-4 text-center min-w-[140px]">
               <p className="text-slate-300 text-sm">Total Attempts</p>
-              <h2 className="text-3xl font-black text-white">
+              <h2 className="text-3xl font-black !text-white">
                 {attempts.length}
               </h2>
             </div>
