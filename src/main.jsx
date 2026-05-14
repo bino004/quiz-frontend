@@ -4,6 +4,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Navigate } from "react-router-dom";
+import AuthCallback from "./AuthCallback";
 
 
 import Login from "./pages/Login";
@@ -62,5 +63,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         }
       />
     </Routes>
+    <Route path="/auth/callback" element={<AuthCallback />} />
   </BrowserRouter>,
 );

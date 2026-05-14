@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { supabase } from "../supabase";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -27,6 +28,19 @@ function Login() {
       }
     } catch (error) {
       alert(error.response?.data?.message || "Login failed");
+    }
+  }
+
+  async function handleGoogleLogin() {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: window.location.origin + "/auth/callback",
+      },
+    });
+
+    if (error) {
+      alert(error.message);
     }
   }
 
@@ -59,6 +73,28 @@ function Login() {
             type="submit"
           >
             Login
+          </button>
+          <div className="relative my-4">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-300"></div>
+            </div>
+
+            <div className="relative flex justify-center text-sm">
+              <span className="bg-white px-3 text-gray-500">OR</span>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={handleGoogleLogin}
+            className="w-full flex items-center justify-center gap-3 border border-gray-300 bg-white py-3 rounded-lg font-semibold hover:bg-gray-100 transition"
+          >
+            <img
+              src="https://www.svgrepo.com/show/475656/google-color.svg"
+              alt="google"
+              className="w-5 h-5"
+            />
+            Continue with Google
           </button>
         </form>
         <p className="text-right">
