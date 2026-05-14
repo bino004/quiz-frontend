@@ -1,13 +1,21 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
-import { LogOut, Search, BookOpen, ArrowRight } from "lucide-react";
+import {
+  LogOut,
+  Search,
+  BookOpen,
+  ArrowRight,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
 
 function UserDashboard() {
   const [quizzes, setQuizzes] = useState([]);
   const [search, setSearch] = useState("");
 
   const [attempts, setAttempts] = useState([]);
+  const [showAttempts, setShowAttempts] = useState(false);
 
   const token = localStorage.getItem("token");
 
@@ -239,64 +247,98 @@ function UserDashboard() {
           </div>
         )}
         <div className="mt-16">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-            <div>
-              <p className="uppercase tracking-widest text-blue-200 text-sm mb-1">
-                Performance
-              </p>
+          {/* Header */}
+          <div className="bg-white/10 border border-white/10 rounded-[32px] backdrop-blur-xl overflow-hidden">
+            <button
+              onClick={() => setShowAttempts(!showAttempts)}
+              className="w-full p-6 flex items-center justify-between hover:bg-white/5 transition"
+            >
+              <div className="text-left">
+                <p className="uppercase tracking-widest text-blue-200 text-sm mb-1">
+                  Performance
+                </p>
 
-              <h2 className="text-3xl font-black !text-white">
-                My Attempt History
-              </h2>
+                <h2 className="text-3xl font-black !text-white">
+                  My Attempt History
+                </h2>
 
-              <p className="text-slate-300 mt-1">
-                Review your previous quiz attempts and scores.
-              </p>
-            </div>
+                <p className="text-slate-300 mt-1">
+                  {attempts.length} total quiz attempts
+                </p>
+              </div>
 
-            <div className="bg-white/10 border border-white/10 rounded-2xl px-5 py-4 text-center min-w-[140px]">
-              <p className="text-slate-300 text-sm">Total Attempts</p>
-              <h2 className="text-3xl font-black !text-white">
-                {attempts.length}
-              </h2>
-            </div>
+              <div className="flex items-center gap-4">
+                <div className="bg-white/10 border border-white/10 rounded-2xl px-5 py-3 text-center min-w-[120px]">
+                  <p className="text-slate-300 text-sm">Attempts</p>
+
+                  <h2 className="text-2xl font-black !text-white">
+                    {attempts.length}
+                  </h2>
+                </div>
+
+                <div className="bg-blue-500/20 p-3 rounded-2xl">
+                  {showAttempts ? (
+                    <ChevronUp className="text-blue-300" />
+                  ) : (
+                    <ChevronDown className="text-blue-300" />
+                  )}
+                </div>
+              </div>
+            </button>
+
+            {/* Expand Table */}
+            {showAttempts && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                transition={{ duration: 0.35 }}
+                className="border-t border-white/10"
+              >
+                {attempts.length === 0 ? (
+                  <div className="p-8 text-center">
+                    <p className="text-slate-300">No attempts yet.</p>
+                  </div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <table className="min-w-full text-sm bg-white/95 text-slate-900">
+                      <thead className="bg-slate-100 sticky top-0">
+                        <tr>
+                          <th className="p-4 text-center">Quiz</th>
+
+                          <th className="p-4 text-center">Score</th>
+
+                          <th className="p-4 text-center">Date</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        {attempts.map((a) => (
+                          <tr
+                            key={a.id}
+                            className="border-t hover:bg-slate-50 transition"
+                          >
+                            <td className="p-4 text-center font-semibold">
+                              {a.quiz_title}
+                            </td>
+
+                            <td className="p-4 text-center">
+                              <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-bold">
+                                {a.score} / {a.total}
+                              </span>
+                            </td>
+
+                            <td className="p-4 text-center text-slate-500">
+                              {new Date(a.created_at).toLocaleString()}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </motion.div>
+            )}
           </div>
-          {attempts.length === 0 ? (
-            <div className="bg-white/10 border border-white/10 rounded-3xl p-8 text-center">
-              <p className="text-slate-300">No attempts yet.</p>
-            </div>
-          ) : (
-            <div className="bg-white/95 text-slate-900 rounded-3xl shadow-2xl overflow-hidden border border-white/20">
-              <table className="min-w-full text-sm">
-                <thead className="bg-slate-100">
-                  <tr>
-                    <th className="w-1/3 p-4 text-center">Quiz</th>
-                    <th className="w-1/3 p-4 text-center">Score</th>
-                    <th className="w-1/3 p-4 text-center">Date</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {attempts.map((a) => (
-                    <tr key={a.id} className="border-t hover:bg-slate-50">
-                      <td className="w-1/3 p-4 text-center font-semibold">
-                        {a.quiz_title}
-                      </td>
-                      <td className="w-1/3 p-4 text-center">
-                        <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-bold">
-                          {a.score} / {a.total}
-                        </span>
-                      </td>
-
-                      <td className="w-1/3 p-4 text-center text-slate-500">
-                        {new Date(a.created_at).toLocaleString()}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
         </div>
       </main>
     </div>
