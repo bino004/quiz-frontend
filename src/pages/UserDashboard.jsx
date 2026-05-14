@@ -15,7 +15,7 @@ function UserDashboard() {
   const [search, setSearch] = useState("");
 
   const [attempts, setAttempts] = useState([]);
-  const [showAttempts, setShowAttempts] = useState(false);
+  const [showAttempts, setShowAttempts] = useState(true);
 
   const token = localStorage.getItem("token");
 
@@ -251,7 +251,7 @@ function UserDashboard() {
           <div className="bg-white/10 border border-white/10 rounded-[32px] backdrop-blur-xl overflow-hidden">
             <button
               onClick={() => setShowAttempts(!showAttempts)}
-              className="w-full p-6 flex items-center justify-between hover:bg-white/5 transition"
+              className="w-full p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-white/5 transition"
             >
               <div className="text-left">
                 <p className="uppercase tracking-widest text-blue-200 text-sm mb-1">
@@ -267,8 +267,8 @@ function UserDashboard() {
                 </p>
               </div>
 
-              <div className="flex items-center gap-4">
-                <div className="bg-white/10 border border-white/10 rounded-2xl px-5 py-3 text-center min-w-[120px]">
+              <div className="flex flex-col sm:flex-row items-center gap-3">
+                <div className="bg-white/10 border border-white/10 rounded-2xl px-4 py-3 text-center min-w-[100px]">
                   <p className="text-slate-300 text-sm">Attempts</p>
 
                   <h2 className="text-2xl font-black !text-white">
